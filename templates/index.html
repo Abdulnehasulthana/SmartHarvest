@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>OptiCrop | Smart Crop Recommendation System</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- ========================================= -->
+<!-- NAVBAR -->
+<!-- ========================================= -->
+
+<header>
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-seedling"></i>
+
+        <span>OptiCrop</span>
+
+    </div>
+
+    <ul class="nav-links">
+
+        <li><a href="#">Home</a></li>
+
+        <li><a href="#predict">Predict</a></li>
+
+        <li><a href="#details">Crop Details</a></li>
+
+        <li><a href="#workflow">How It Works</a></li>
+
+        <li><a href="#dataset">Dataset</a></li>
+
+    </ul>
+
+</nav>
+
+</header>
+
+<!-- ========================================= -->
+<!-- HERO -->
+<!-- ========================================= -->
+
+<section class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-container">
+
+        <!-- LEFT -->
+
+        <div class="hero-left">
+
+            <span class="hero-tag">
+
+                🌱 Smart Agriculture
+
+            </span>
+
+            <h1>
+
+                Smart Farming
+
+                <span>
+
+                    Starts Here
+
+                </span>
+
+            </h1>
+
+            <p>
+
+                OptiCrop recommends the most suitable crop
+                based on soil nutrients and environmental
+                conditions using a Machine Learning model.
+
+            </p>
+
+            <div class="hero-features">
+
+                <div>
+
+                    <i class="fa-solid fa-seedling"></i>
+
+                    <span>22 Crop Classes</span>
+
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-database"></i>
+
+                    <span>2200+ Records</span>
+
+                </div>
+
+                <div>
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    <span>ML Prediction</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="prediction-card"
+             id="predict">
+
+            <h2>
+
+                Crop Recommendation
+
+            </h2>
+
+            <p>
+
+                Enter the soil and environmental values.
+
+            </p>
+
+            <form id="predictionForm">
+                <!-- ========================= -->
+                <!-- Nitrogen -->
+                <!-- ========================= -->
+
+                <div class="input-group">
+
+                    <label for="N">
+
+                        <i class="fa-solid fa-flask"></i>
+
+                        Nitrogen (N)
+
+                    </label>
+
+                    <input type="number"
+                           id="N"
+                           placeholder="Example: 90"
+                           required>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Phosphorus -->
+                <!-- ========================= -->
+
+                <div class="input-group">
+
+                    <label for="P">
+
+                        <i class="fa-solid fa-vial"></i>
+
+                        Phosphorus (P)
+
+                    </label>
+
+                    <input type="number"
+                           id="P"
+                           placeholder="Example: 42"
+                           required>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Potassium -->
+                <!-- ========================= -->
+
+                <div class="input-group">
+
+                    <label for="K">
+
+                        <i class="fa-solid fa-leaf"></i>
+
+                        Potassium (K)
+
+                    </label>
+
+                    <input type="number"
+                           id="K"
+                           placeholder="Example: 43"
+                           required>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Temperature -->
+                <!-- ========================= -->
+
+                <div class="input-group">
+
+                    <label for="temperature">
+
+                        <i class="fa-solid fa-temperature-half"></i>
+
+                        Temperature (°C)
+
+                    </label>
+
+                    <input type="number"
+                           step="0.1"
+                           id="temperature"
+                           placeholder="Example: 25"
+                           required>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Humidity -->
+                <!-- ========================= -->
+
+                <div class="input-group">
+
+                    <label for="humidity">
+
+                        <i class="fa-solid fa-droplet"></i>
+
+                        Humidity (%)
+
+                    </label>
+
+                    <input type="number"
+                           step="0.1"
+                           id="humidity"
+                           placeholder="Example: 80"
+                           required>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Soil pH -->
+                <!-- ========================= -->
+
+                <div class="input-group">
+
+                    <label for="ph">
+
+                        <i class="fa-solid fa-water"></i>
+
+                        Soil pH
+
+                    </label>
+
+                    <input type="number"
+                           step="0.1"
+                           id="ph"
+                           placeholder="Example: 6.5"
+                           required>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Rainfall -->
+                <!-- ========================= -->
+
+                <div class="input-group">
+
+                    <label for="rainfall">
+
+                        <i class="fa-solid fa-cloud-rain"></i>
+
+                        Rainfall (mm)
+
+                    </label>
+
+                    <input type="number"
+                           step="0.1"
+                           id="rainfall"
+                           placeholder="Example: 200"
+                           required>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Predict Button -->
+                <!-- ========================= -->
+
+                <button
+                    type="submit"
+                    class="predict-btn">
+
+                    <i class="fa-solid fa-seedling"></i>
+
+                    Predict Best Crop
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ========================================= -->
+<!-- PREDICTION RESULT -->
+<!-- ========================================= -->
+
+<section class="result-section" id="resultSection">
+
+    <div class="section-heading">
+
+        <span class="section-tag">
+
+            <i class="fa-solid fa-seedling"></i>
+
+            Prediction Result
+
+        </span>
+
+        <h2>
+
+            Recommended Crop
+
+        </h2>
+
+        <p>
+
+            Based on the soil nutrients and environmental conditions,
+            OptiCrop recommends the following crop.
+
+        </p>
+
+    </div>
+
+
+    <div class="result-card">
+
+        <div class="result-image">
+
+            <img id="cropImage"
+                 src="{{ url_for('static', filename='images/default.jpg') }}"
+                 alt="Crop Image">
+
+        </div>
+
+
+        <div class="result-content">
+
+            <span class="result-badge">
+
+                Best Recommendation
+
+            </span>
+
+            <h2 id="cropName">
+
+                Waiting for Prediction...
+
+            </h2>
+
+            <p id="cropDescription">
+
+                Enter the required values and click
+                <strong>Predict Best Crop</strong>.
+
+            </p>
+
+            <div class="confidence-box">
+
+                <span>
+
+                    Prediction Confidence
+
+                </span>
+
+                <h3>
+
+                    <span id="confidence">
+
+                        --
+
+                    </span> %
+
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================= -->
+<!-- CROP DETAILS -->
+<!-- ========================================= -->
+
+<section class="crop-details" id="details">
+
+    <div class="section-heading">
+
+        <span class="section-tag">
+
+            <i class="fa-solid fa-leaf"></i>
+
+            Crop Information
+
+        </span>
+
+        <h2>
+
+            Complete Crop Details
+
+        </h2>
+
+        <p>
+
+            Detailed agricultural information
+            for the recommended crop.
+
+        </p>
+
+    </div>
+
+
+    <div class="details-grid">
+
+        <div class="detail-card">
+
+            <i class="fa-solid fa-calendar-days"></i>
+
+            <h4>Season</h4>
+
+            <p id="season">
+
+                --
+
+            </p>
+
+        </div>
+
+
+        <div class="detail-card">
+
+            <i class="fa-solid fa-clock"></i>
+
+            <h4>Harvest Time</h4>
+
+            <p id="harvest">
+
+                --
+
+            </p>
+
+        </div>
+
+
+        <div class="detail-card">
+
+            <i class="fa-solid fa-seedling"></i>
+
+            <h4>Soil Type</h4>
+
+            <p id="soil">
+
+                --
+
+            </p>
+
+        </div>
+
+
+        <div class="detail-card">
+
+            <i class="fa-solid fa-tint"></i>
+
+            <h4>Water Requirement</h4>
+
+            <p id="water">
+
+                --
+
+            </p>
+
+        </div>
+
+
+        <div class="detail-card">
+
+            <i class="fa-solid fa-flask"></i>
+
+            <h4>Fertilizer</h4>
+
+            <p id="fertilizer">
+
+                --
+
+            </p>
+
+        </div>
+
+
+        <div class="detail-card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h4>Market Demand</h4>
+
+            <p id="market">
+
+                --
+
+            </p>
+
+        </div>
+
+
+        <div class="detail-card">
+
+            <i class="fa-solid fa-earth-asia"></i>
+
+            <h4>Suitable Regions</h4>
+
+            <p id="regions">
+
+                --
+
+            </p>
+
+        </div>
+
+
+        <div class="detail-card">
+
+            <i class="fa-solid fa-utensils"></i>
+
+            <h4>Common Uses</h4>
+
+            <p id="uses">
+
+                --
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ========================================= -->
+<!-- GROWING CONDITIONS -->
+<!-- ========================================= -->
+
+<section class="conditions-section">
+
+    <div class="section-heading">
+
+        <span class="section-tag">
+
+            <i class="fa-solid fa-cloud-sun"></i>
+
+            Growing Conditions
+
+        </span>
+
+        <h2>
+
+            Ideal Environmental Conditions
+
+        </h2>
+
+        <p>
+
+            Recommended climate and soil conditions for cultivating
+            the predicted crop successfully.
+
+        </p>
+
+    </div>
+
+    <div class="conditions-grid">
+
+        <div class="condition-card">
+
+            <i class="fa-solid fa-temperature-half"></i>
+
+            <h3>
+
+                Temperature
+
+            </h3>
+
+            <p id="temperatureRange">
+
+                --
+
+            </p>
+
+        </div>
+
+        <div class="condition-card">
+
+            <i class="fa-solid fa-droplet"></i>
+
+            <h3>
+
+                Humidity
+
+            </h3>
+
+            <p id="humidityRange">
+
+                --
+
+            </p>
+
+        </div>
+
+        <div class="condition-card">
+
+            <i class="fa-solid fa-vial"></i>
+
+            <h3>
+
+                Soil pH
+
+            </h3>
+
+            <p id="phRange">
+
+                --
+
+            </p>
+
+        </div>
+
+        <div class="condition-card">
+
+            <i class="fa-solid fa-cloud-rain"></i>
+
+            <h3>
+
+                Rainfall
+
+            </h3>
+
+            <p id="rainfallRange">
+
+                --
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ========================================= -->
+<!-- GROWING TIPS -->
+<!-- ========================================= -->
+
+<section class="tips-section">
+
+    <div class="section-heading">
+
+        <span class="section-tag">
+
+            <i class="fa-solid fa-lightbulb"></i>
+
+            Farming Tips
+
+        </span>
+
+        <h2>
+
+            Best Cultivation Practices
+
+        </h2>
+
+        <p>
+
+            Follow these recommendations to improve crop growth,
+            yield and overall farm productivity.
+
+        </p>
+
+    </div>
+
+    <div class="tips-container">
+
+        <div class="tips-card">
+
+            <i class="fa-solid fa-seedling"></i>
+
+            <h3>
+
+                Growing Tips
+
+            </h3>
+
+            <ul id="tipsList">
+
+                <li>Prediction required to view recommendations.</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ========================================= -->
+<!-- HOW IT WORKS -->
+<!-- ========================================= -->
+
+<section class="workflow-section" id="workflow">
+
+    <div class="section-heading">
+
+        <span class="section-tag">
+
+            <i class="fa-solid fa-gears"></i>
+
+            Workflow
+
+        </span>
+
+        <h2>
+
+            How OptiCrop Works
+
+        </h2>
+
+        <p>
+
+            A simple four-step process to recommend the most suitable crop.
+
+        </p>
+
+    </div>
+
+    <div class="workflow-grid">
+
+        <div class="workflow-card">
+
+            <div class="step-number">1</div>
+
+            <i class="fa-solid fa-flask"></i>
+
+            <h3>Enter Soil Data</h3>
+
+            <p>
+
+                Provide Nitrogen, Phosphorus, Potassium,
+                pH, Temperature, Humidity and Rainfall.
+
+            </p>
+
+        </div>
+
+        <div class="workflow-card">
+
+            <div class="step-number">2</div>
+
+            <i class="fa-solid fa-database"></i>
+
+            <h3>Data Processing</h3>
+
+            <p>
+
+                Flask prepares the data and sends it
+                to the trained Machine Learning model.
+
+            </p>
+
+        </div>
+
+        <div class="workflow-card">
+
+            <div class="step-number">3</div>
+
+            <i class="fa-solid fa-brain"></i>
+
+            <h3>Prediction</h3>
+
+            <p>
+
+                The ML model predicts the most
+                suitable crop for your conditions.
+
+            </p>
+
+        </div>
+
+        <div class="workflow-card">
+
+            <div class="step-number">4</div>
+
+            <i class="fa-solid fa-seedling"></i>
+
+            <h3>Recommendation</h3>
+
+            <p>
+
+                View complete crop information,
+                growing conditions and cultivation tips.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================= -->
+<!-- DATASET -->
+<!-- ========================================= -->
+
+<section class="dataset-section" id="dataset">
+
+    <div class="section-heading">
+
+        <span class="section-tag">
+
+            <i class="fa-solid fa-chart-simple"></i>
+
+            Dataset
+
+        </span>
+
+        <h2>
+
+            Model Information
+
+        </h2>
+
+        <p>
+
+            The recommendation model has been trained
+            using agricultural soil and climate data.
+
+        </p>
+
+    </div>
+
+    <div class="dataset-grid">
+
+        <div class="dataset-card">
+
+            <h2>2200+</h2>
+
+            <p>Training Records</p>
+
+        </div>
+
+        <div class="dataset-card">
+
+            <h2>22</h2>
+
+            <p>Crop Classes</p>
+
+        </div>
+
+        <div class="dataset-card">
+
+            <h2>7</h2>
+
+            <p>Input Features</p>
+
+        </div>
+
+        <div class="dataset-card">
+
+            <h2>Random Forest</h2>
+
+            <p>Machine Learning Model</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================= -->
+<!-- FOOTER -->
+<!-- ========================================= -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-logo">
+
+            <i class="fa-solid fa-seedling"></i>
+
+            <h2>
+
+                OptiCrop
+
+            </h2>
+
+            <p>
+
+                Smart Crop Recommendation System
+                using Machine Learning and Flask.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>
+
+                Quick Links
+
+            </h3>
+
+            <a href="#">Home</a>
+
+            <a href="#predict">Prediction</a>
+
+            <a href="#details">Crop Details</a>
+
+            <a href="#workflow">Workflow</a>
+
+        </div>
+
+        <div class="footer-tech">
+
+            <h3>
+
+                Technologies
+
+            </h3>
+
+            <p>Python</p>
+
+            <p>Flask</p>
+
+            <p>Scikit-learn</p>
+
+            <p>HTML • CSS • JavaScript</p>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 OptiCrop | Smart Crop Recommendation System
+
+    </div>
+
+</footer>
+
+
+<!-- ========================================= -->
+<!-- SCROLL TO TOP -->
+<!-- ========================================= -->
+
+<button id="topBtn">
+
+    <i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+
+<!-- ========================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================= -->
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
