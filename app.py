@@ -175,7 +175,7 @@ def server_error(error):
 if __name__ == "__main__":
 
     print("=" * 60)
-    print("🌱 OptiCrop AI")
+    print("🌱 SmartHarvest AI")
     print("=" * 60)
     print("Model      :", MODEL_PATH)
     print("Encoder    :", ENCODER_PATH)

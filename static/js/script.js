@@ -1,5 +1,5 @@
 // ==========================================================
-// OptiCrop
+// SmartHarvest
 // Frontend JavaScript
 // ==========================================================
 
@@ -10,7 +10,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    console.log("OptiCrop Loaded Successfully");
+    console.log("SmartHarvest Loaded Successfully");
 
     // ================================================
     // Navbar Shadow
@@ -402,7 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log(
 
-        "%c🌱 OptiCrop Ready!",
+        "%c🌱 SmartHarvest Ready!",
 
         "color:green;font-size:18px;font-weight:bold;"
 
