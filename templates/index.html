@@ -11,30 +11,28 @@
     <title>SmartHarvest | Smart Crop Recommendation System</title>
 
     <!-- CSS -->
-
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
 
     <!-- Google Font -->
-
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
 
     <link rel="preconnect"
-          href="https://fonts.gstatic.com"
+          href="https://fonts.googleapis.com"
           crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet">
 
     <!-- Font Awesome -->
-
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
 
 <body>
+
 
 <!-- ========================================= -->
 <!-- NAVBAR -->
@@ -70,6 +68,7 @@
 
 </header>
 
+
 <!-- ========================================= -->
 <!-- HERO -->
 <!-- ========================================= -->
@@ -80,6 +79,7 @@
 
     <div class="hero-container">
 
+
         <!-- LEFT -->
 
         <div class="hero-left">
@@ -89,6 +89,7 @@
                 🌱 Smart Agriculture
 
             </span>
+
 
             <h1>
 
@@ -102,6 +103,7 @@
 
             </h1>
 
+
             <p>
 
                 SmartHarvest recommends the most suitable crop
@@ -109,6 +111,7 @@
                 conditions using a Machine Learning model.
 
             </p>
+
 
             <div class="hero-features">
 
@@ -120,6 +123,7 @@
 
                 </div>
 
+
                 <div>
 
                     <i class="fa-solid fa-database"></i>
@@ -127,6 +131,7 @@
                     <span>2200+ Records</span>
 
                 </div>
+
 
                 <div>
 
@@ -140,6 +145,8 @@
 
         </div>
 
+
+
         <!-- RIGHT -->
 
         <div class="prediction-card"
@@ -151,13 +158,17 @@
 
             </h2>
 
+
             <p>
 
                 Enter the soil and environmental values.
 
             </p>
 
+
             <form id="predictionForm">
+
+
                 <!-- ========================= -->
                 <!-- Nitrogen -->
                 <!-- ========================= -->
@@ -168,7 +179,7 @@
 
                         <i class="fa-solid fa-flask"></i>
 
-                        Nitrogen (N)
+                        Nitrogen (నత్రజని) (N)
 
                     </label>
 
@@ -178,6 +189,7 @@
                            required>
 
                 </div>
+
 
 
                 <!-- ========================= -->
@@ -190,7 +202,7 @@
 
                         <i class="fa-solid fa-vial"></i>
 
-                        Phosphorus (P)
+                        Phosphorus (భాస్వరం) (P)
 
                     </label>
 
@@ -200,6 +212,7 @@
                            required>
 
                 </div>
+
 
 
                 <!-- ========================= -->
@@ -212,7 +225,7 @@
 
                         <i class="fa-solid fa-leaf"></i>
 
-                        Potassium (K)
+                        Potassium (పొటాషియం) (K)
 
                     </label>
 
@@ -222,6 +235,7 @@
                            required>
 
                 </div>
+
 
 
                 <!-- ========================= -->
@@ -234,7 +248,7 @@
 
                         <i class="fa-solid fa-temperature-half"></i>
 
-                        Temperature (°C)
+                        Temperature (ఉష్ణోగ్రత) (°C)
 
                     </label>
 
@@ -247,6 +261,7 @@
                 </div>
 
 
+
                 <!-- ========================= -->
                 <!-- Humidity -->
                 <!-- ========================= -->
@@ -257,7 +272,7 @@
 
                         <i class="fa-solid fa-droplet"></i>
 
-                        Humidity (%)
+                        Humidity (తేమ) (%)
 
                     </label>
 
@@ -270,6 +285,7 @@
                 </div>
 
 
+
                 <!-- ========================= -->
                 <!-- Soil pH -->
                 <!-- ========================= -->
@@ -280,7 +296,7 @@
 
                         <i class="fa-solid fa-water"></i>
 
-                        Soil pH
+                        Soil pH (నేల pH)
 
                     </label>
 
@@ -293,6 +309,7 @@
                 </div>
 
 
+
                 <!-- ========================= -->
                 <!-- Rainfall -->
                 <!-- ========================= -->
@@ -303,7 +320,7 @@
 
                         <i class="fa-solid fa-cloud-rain"></i>
 
-                        Rainfall (mm)
+                        Rainfall (వర్షపాతం) (mm)
 
                     </label>
 
@@ -314,6 +331,7 @@
                            required>
 
                 </div>
+
 
 
                 <!-- ========================= -->
@@ -337,6 +355,9 @@
     </div>
 
 </section>
+
+
+
 <!-- ========================================= -->
 <!-- PREDICTION RESULT -->
 <!-- ========================================= -->
@@ -353,11 +374,13 @@
 
         </span>
 
+
         <h2>
 
             Recommended Crop
 
         </h2>
+
 
         <p>
 
@@ -369,7 +392,9 @@
     </div>
 
 
+
     <div class="result-card">
+
 
         <div class="result-image">
 
@@ -380,6 +405,7 @@
         </div>
 
 
+
         <div class="result-content">
 
             <span class="result-badge">
@@ -388,11 +414,13 @@
 
             </span>
 
+
             <h2 id="cropName">
 
                 Waiting for Prediction...
 
             </h2>
+
 
             <p id="cropDescription">
 
@@ -401,6 +429,7 @@
 
             </p>
 
+
             <div class="confidence-box">
 
                 <span>
@@ -408,6 +437,7 @@
                     Prediction Confidence
 
                 </span>
+
 
                 <h3>
 
@@ -428,6 +458,7 @@
 </section>
 
 
+
 <!-- ========================================= -->
 <!-- CROP DETAILS -->
 <!-- ========================================= -->
@@ -444,11 +475,13 @@
 
         </span>
 
+
         <h2>
 
             Complete Crop Details
 
         </h2>
+
 
         <p>
 
@@ -460,7 +493,11 @@
     </div>
 
 
+
     <div class="details-grid">
+
+
+        <!-- Season -->
 
         <div class="detail-card">
 
@@ -477,6 +514,9 @@
         </div>
 
 
+
+        <!-- Harvest -->
+
         <div class="detail-card">
 
             <i class="fa-solid fa-clock"></i>
@@ -491,6 +531,9 @@
 
         </div>
 
+
+
+        <!-- Soil -->
 
         <div class="detail-card">
 
@@ -507,6 +550,9 @@
         </div>
 
 
+
+        <!-- Water -->
+
         <div class="detail-card">
 
             <i class="fa-solid fa-tint"></i>
@@ -521,6 +567,9 @@
 
         </div>
 
+
+
+        <!-- Fertilizer -->
 
         <div class="detail-card">
 
@@ -537,6 +586,9 @@
         </div>
 
 
+
+        <!-- Market -->
+
         <div class="detail-card">
 
             <i class="fa-solid fa-chart-line"></i>
@@ -552,6 +604,9 @@
         </div>
 
 
+
+        <!-- Regions -->
+
         <div class="detail-card">
 
             <i class="fa-solid fa-earth-asia"></i>
@@ -566,6 +621,9 @@
 
         </div>
 
+
+
+        <!-- Common Uses -->
 
         <div class="detail-card">
 
@@ -584,6 +642,9 @@
     </div>
 
 </section>
+
+
+
 <!-- ========================================= -->
 <!-- GROWING CONDITIONS -->
 <!-- ========================================= -->
@@ -600,11 +661,13 @@
 
         </span>
 
+
         <h2>
 
             Ideal Environmental Conditions
 
         </h2>
+
 
         <p>
 
@@ -615,7 +678,11 @@
 
     </div>
 
+
     <div class="conditions-grid">
+
+
+        <!-- Temperature -->
 
         <div class="condition-card">
 
@@ -635,6 +702,10 @@
 
         </div>
 
+
+
+        <!-- Humidity -->
+
         <div class="condition-card">
 
             <i class="fa-solid fa-droplet"></i>
@@ -653,6 +724,10 @@
 
         </div>
 
+
+
+        <!-- Soil pH -->
+
         <div class="condition-card">
 
             <i class="fa-solid fa-vial"></i>
@@ -670,6 +745,10 @@
             </p>
 
         </div>
+
+
+
+        <!-- Rainfall -->
 
         <div class="condition-card">
 
@@ -711,11 +790,13 @@
 
         </span>
 
+
         <h2>
 
             Best Cultivation Practices
 
         </h2>
+
 
         <p>
 
@@ -725,6 +806,7 @@
         </p>
 
     </div>
+
 
     <div class="tips-container">
 
@@ -738,9 +820,12 @@
 
             </h3>
 
+
             <ul id="tipsList">
 
-                <li>Prediction required to view recommendations.</li>
+                <li>
+                    Prediction required to view recommendations.
+                </li>
 
             </ul>
 
@@ -749,6 +834,9 @@
     </div>
 
 </section>
+
+
+
 <!-- ========================================= -->
 <!-- HOW IT WORKS -->
 <!-- ========================================= -->
@@ -765,11 +853,13 @@
 
         </span>
 
+
         <h2>
 
             How SmartHarvest Works
 
         </h2>
+
 
         <p>
 
@@ -779,15 +869,23 @@
 
     </div>
 
+
     <div class="workflow-grid">
+
+
+        <!-- Step 1 -->
 
         <div class="workflow-card">
 
-            <div class="step-number">1</div>
+            <div class="step-number">
+                1
+            </div>
 
             <i class="fa-solid fa-flask"></i>
 
-            <h3>Enter Soil Data</h3>
+            <h3>
+                Enter Soil Data
+            </h3>
 
             <p>
 
@@ -798,13 +896,21 @@
 
         </div>
 
+
+
+        <!-- Step 2 -->
+
         <div class="workflow-card">
 
-            <div class="step-number">2</div>
+            <div class="step-number">
+                2
+            </div>
 
             <i class="fa-solid fa-database"></i>
 
-            <h3>Data Processing</h3>
+            <h3>
+                Data Processing
+            </h3>
 
             <p>
 
@@ -815,13 +921,21 @@
 
         </div>
 
+
+
+        <!-- Step 3 -->
+
         <div class="workflow-card">
 
-            <div class="step-number">3</div>
+            <div class="step-number">
+                3
+            </div>
 
             <i class="fa-solid fa-brain"></i>
 
-            <h3>Prediction</h3>
+            <h3>
+                Prediction
+            </h3>
 
             <p>
 
@@ -832,13 +946,21 @@
 
         </div>
 
+
+
+        <!-- Step 4 -->
+
         <div class="workflow-card">
 
-            <div class="step-number">4</div>
+            <div class="step-number">
+                4
+            </div>
 
             <i class="fa-solid fa-seedling"></i>
 
-            <h3>Recommendation</h3>
+            <h3>
+                Recommendation
+            </h3>
 
             <p>
 
@@ -852,6 +974,7 @@
     </div>
 
 </section>
+
 
 
 <!-- ========================================= -->
@@ -870,11 +993,13 @@
 
         </span>
 
+
         <h2>
 
             Model Information
 
         </h2>
+
 
         <p>
 
@@ -885,43 +1010,68 @@
 
     </div>
 
+
     <div class="dataset-grid">
 
+
         <div class="dataset-card">
 
-            <h2>2200+</h2>
+            <h2>
+                2200+
+            </h2>
 
-            <p>Training Records</p>
+            <p>
+                Training Records
+            </p>
 
         </div>
 
+
+
         <div class="dataset-card">
 
-            <h2>22</h2>
+            <h2>
+                22
+            </h2>
 
-            <p>Crop Classes</p>
+            <p>
+                Crop Classes
+            </p>
 
         </div>
 
+
+
         <div class="dataset-card">
 
-            <h2>7</h2>
+            <h2>
+                7
+            </h2>
 
-            <p>Input Features</p>
+            <p>
+                Input Features
+            </p>
 
         </div>
 
+
+
         <div class="dataset-card">
 
-            <h2>Random Forest</h2>
+            <h2>
+                Random Forest
+            </h2>
 
-            <p>Machine Learning Model</p>
+            <p>
+                Machine Learning Model
+            </p>
 
         </div>
 
     </div>
 
 </section>
+
 
 
 <!-- ========================================= -->
@@ -931,6 +1081,9 @@
 <footer>
 
     <div class="footer-container">
+
+
+        <!-- Footer Logo -->
 
         <div class="footer-logo">
 
@@ -951,6 +1104,10 @@
 
         </div>
 
+
+
+        <!-- Footer Links -->
+
         <div class="footer-links">
 
             <h3>
@@ -959,15 +1116,35 @@
 
             </h3>
 
-            <a href="#">Home</a>
+            <a href="#">
 
-            <a href="#predict">Prediction</a>
+                Home
 
-            <a href="#details">Crop Details</a>
+            </a>
 
-            <a href="#workflow">Workflow</a>
+            <a href="#predict">
+
+                Prediction
+
+            </a>
+
+            <a href="#details">
+
+                Crop Details
+
+            </a>
+
+            <a href="#workflow">
+
+                Workflow
+
+            </a>
 
         </div>
+
+
+
+        <!-- Footer Technologies -->
 
         <div class="footer-tech">
 
@@ -977,17 +1154,26 @@
 
             </h3>
 
-            <p>Python</p>
+            <p>
+                Python
+            </p>
 
-            <p>Flask</p>
+            <p>
+                Flask
+            </p>
 
-            <p>Scikit-learn</p>
+            <p>
+                Scikit-learn
+            </p>
 
-            <p>HTML • CSS • JavaScript</p>
+            <p>
+                HTML • CSS • JavaScript
+            </p>
 
         </div>
 
     </div>
+
 
     <div class="footer-bottom">
 
@@ -996,6 +1182,7 @@
     </div>
 
 </footer>
+
 
 
 <!-- ========================================= -->
@@ -1009,11 +1196,13 @@
 </button>
 
 
+
 <!-- ========================================= -->
 <!-- JAVASCRIPT -->
 <!-- ========================================= -->
 
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 
 </body>
 

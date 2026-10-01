@@ -3,90 +3,90 @@
 // Frontend JavaScript
 // ==========================================================
 
-
-// ================================================
-// DOM Loaded
-// ================================================
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    console.log("SmartHarvest Loaded Successfully");
+    console.log("🌱 SmartHarvest Loaded Successfully");
 
-    // ================================================
+
+    // ==========================================================
     // Navbar Shadow
-    // ================================================
+    // ==========================================================
 
     const navbar = document.querySelector(".navbar");
 
-    window.addEventListener("scroll", () => {
+    if (navbar) {
+        window.addEventListener("scroll", () => {
 
-        if (window.scrollY > 30) {
+            if (window.scrollY > 30) {
+                navbar.style.boxShadow =
+                    "0 10px 30px rgba(0, 0, 0, 0.15)";
+            } else {
+                navbar.style.boxShadow =
+                    "0 5px 20px rgba(0, 0, 0, 0.08)";
+            }
 
-            navbar.style.boxShadow =
-                "0 10px 30px rgba(0,0,0,.15)";
-
-        }
-
-        else {
-
-            navbar.style.boxShadow =
-                "0 5px 20px rgba(0,0,0,.08)";
-
-        }
-
-    });
+        });
+    }
 
 
-    // ================================================
+    // ==========================================================
     // Scroll To Top Button
-    // ================================================
+    // ==========================================================
 
     const topBtn = document.getElementById("topBtn");
 
-    window.addEventListener("scroll", () => {
+    if (topBtn) {
 
-        if (window.scrollY > 500) {
+        window.addEventListener("scroll", () => {
 
-            topBtn.style.display = "block";
-
-        }
-
-        else {
-
-            topBtn.style.display = "none";
-
-        }
-
-    });
-
-
-    topBtn.addEventListener("click", () => {
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
+            if (window.scrollY > 500) {
+                topBtn.style.display = "block";
+            } else {
+                topBtn.style.display = "none";
+            }
 
         });
 
-    });
+
+        topBtn.addEventListener("click", () => {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+    }
 
 
-    // ================================================
+    // ==========================================================
     // Form Elements
-    // ================================================
+    // ==========================================================
 
-    const form = document.getElementById("predictionForm");
+    const form =
+        document.getElementById("predictionForm");
 
-    const predictBtn = document.querySelector(".predict-btn");
+    const predictBtn =
+        document.querySelector(".predict-btn");
 
 
-    // ================================================
+    if (!form) {
+
+        console.error(
+            "Prediction form not found."
+        );
+
+        return;
+    }
+
+
+    // ==========================================================
     // Result Elements
-    // ================================================
+    // ==========================================================
 
-    const cropName = document.getElementById("cropName");
+    const cropName =
+        document.getElementById("cropName");
 
     const cropDescription =
         document.getElementById("cropDescription");
@@ -98,7 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("confidence");
 
 
+    // ==========================================================
     // Crop Details
+    // ==========================================================
 
     const season =
         document.getElementById("season");
@@ -125,7 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("uses");
 
 
+    // ==========================================================
     // Growing Conditions
+    // ==========================================================
 
     const temperatureRange =
         document.getElementById("temperatureRange");
@@ -140,222 +144,682 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("rainfallRange");
 
 
-    // Tips
+    // ==========================================================
+    // Growing Tips
+    // ==========================================================
 
     const tipsList =
         document.getElementById("tipsList");
-    // ================================================
+
+
+    // ==========================================================
+    // Helper Function
+    // ==========================================================
+
+    function displayValue(value, defaultValue = "--") {
+
+        if (
+            value === null ||
+            value === undefined ||
+            String(value).trim() === ""
+        ) {
+            return defaultValue;
+        }
+
+        return value;
+    }
+
+
+    // ==========================================================
+    // Array Display Helper
+    // ==========================================================
+
+    function displayArray(value, separator = ", ") {
+
+        if (Array.isArray(value)) {
+
+            const filteredValues = value.filter(
+                item =>
+                    item !== null &&
+                    item !== undefined &&
+                    String(item).trim() !== ""
+            );
+
+            if (filteredValues.length === 0) {
+                return "--";
+            }
+
+            return filteredValues.join(separator);
+        }
+
+        return displayValue(value);
+    }
+
+
+    // ==========================================================
+    // Collect Input Values
+    // ==========================================================
+
+    function getInputValue(id) {
+
+        const element =
+            document.getElementById(id);
+
+        if (!element) {
+            return null;
+        }
+
+        return element.value.trim();
+    }
+
+
+    // ==========================================================
     // Prediction Form Submit
-    // ================================================
+    // ==========================================================
 
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", async (event) => {
 
-        e.preventDefault();
+        event.preventDefault();
+
+
+        // ======================================================
+        // Read Input Values
+        // ======================================================
+
+        const N = getInputValue("N");
+        const P = getInputValue("P");
+        const K = getInputValue("K");
+        const temperature = getInputValue("temperature");
+        const humidity = getInputValue("humidity");
+        const ph = getInputValue("ph");
+        const rainfall = getInputValue("rainfall");
+
+
+        // ======================================================
+        // Validate Input Values
+        // ======================================================
+
+        const values = [
+            N,
+            P,
+            K,
+            temperature,
+            humidity,
+            ph,
+            rainfall
+        ];
+
+
+        const hasEmptyValue =
+            values.some(
+                value =>
+                    value === null ||
+                    value === ""
+            );
+
+
+        if (hasEmptyValue) {
+
+            alert(
+                "Please enter all soil and environmental values."
+            );
+
+            return;
+        }
+
+
+        // ======================================================
+        // Convert Values To Numbers
+        // ======================================================
 
         const inputData = {
 
-            N: Number(document.getElementById("N").value),
+            N: Number(N),
 
-            P: Number(document.getElementById("P").value),
+            P: Number(P),
 
-            K: Number(document.getElementById("K").value),
+            K: Number(K),
 
-            temperature: Number(document.getElementById("temperature").value),
+            temperature: Number(temperature),
 
-            humidity: Number(document.getElementById("humidity").value),
+            humidity: Number(humidity),
 
-            ph: Number(document.getElementById("ph").value),
+            ph: Number(ph),
 
-            rainfall: Number(document.getElementById("rainfall").value)
+            rainfall: Number(rainfall)
 
         };
 
 
+        // ======================================================
+        // Validate Numeric Values
+        // ======================================================
+
+        const containsInvalidNumber =
+            Object.values(inputData).some(
+                value => !Number.isFinite(value)
+            );
+
+
+        if (containsInvalidNumber) {
+
+            alert(
+                "Please enter valid numerical values."
+            );
+
+            return;
+        }
+
+
+        // ======================================================
         // Loading State
+        // ======================================================
 
-        predictBtn.disabled = true;
+        if (predictBtn) {
 
-        predictBtn.innerHTML =
-            '<i class="fa-solid fa-spinner fa-spin"></i> Predicting...';
+            predictBtn.disabled = true;
 
+            predictBtn.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Predicting...';
 
-        try{
-
-            const response = await fetch("/predict",{
-
-                method:"POST",
-
-                headers:{
-
-                    "Content-Type":"application/json"
-
-                },
-
-                body:JSON.stringify(inputData)
-
-            });
+        }
 
 
-            const result = await response.json();
+        try {
+
+            // ==================================================
+            // Send Prediction Request
+            // ==================================================
+
+            const response = await fetch(
+                "/predict",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(inputData)
+                }
+            );
 
 
-            if(result.error){
+            // ==================================================
+            // Check HTTP Response
+            // ==================================================
 
-                throw new Error(result.error);
+            if (!response.ok) {
+
+                throw new Error(
+                    `Server error: ${response.status}`
+                );
 
             }
 
 
-            // ============================================
-            // Show Result
-            // ============================================
+            // ==================================================
+            // Convert Response To JSON
+            // ==================================================
 
-            document.getElementById("resultSection")
-            .scrollIntoView({
-
-                behavior:"smooth"
-
-            });
+            const result =
+                await response.json();
 
 
-            cropName.textContent =
-                result.recommended_crop;
+            // ==================================================
+            // Check API Error
+            // ==================================================
 
-            cropDescription.textContent =
-                result.details.description;
+            if (result.error) {
 
-            confidence.textContent =
-                result.confidence;
+                throw new Error(
+                    result.error
+                );
 
-            cropImage.src =
-                result.details.image;
-
-            cropImage.alt =
-                result.recommended_crop;
+            }
 
 
-            // Crop Information
+            // ==================================================
+            // Check Prediction Response
+            // ==================================================
 
-            season.textContent =
-                result.details.season;
+            if (
+                !result.recommended_crop ||
+                !result.details
+            ) {
 
-            harvest.textContent =
-                result.details.harvest_time;
+                throw new Error(
+                    "Incomplete prediction response received."
+                );
 
-            soil.textContent =
-                result.details.soil_type;
-
-            water.textContent =
-                result.details.water_requirement;
-
-            fertilizer.textContent =
-                result.details.fertilizer;
-
-            market.textContent =
-                result.details.market_demand;
-
-            regions.textContent =
-                result.details.suitable_regions;
-
-            uses.textContent =
-                result.details.uses;
-            // ============================================
-            // Growing Conditions
-            // ============================================
-
-            temperatureRange.textContent =
-                result.details.temperature;
-
-            humidityRange.textContent =
-                result.details.humidity;
-
-            phRange.textContent =
-                result.details.ph;
-
-            rainfallRange.textContent =
-                result.details.rainfall;
+            }
 
 
-            // ============================================
-            // Growing Tips
-            // ============================================
+            // ==================================================
+            // Scroll To Result
+            // ==================================================
 
-            tipsList.innerHTML = "";
+            const resultSection =
+                document.getElementById(
+                    "resultSection"
+                );
 
 
-            if (Array.isArray(result.details.growing_tips)) {
+            if (resultSection) {
 
-                result.details.growing_tips.forEach((tip) => {
-
-                    const li = document.createElement("li");
-
-                    li.textContent = tip;
-
-                    tipsList.appendChild(li);
-
+                resultSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
                 });
 
             }
 
-            else {
 
-                const li = document.createElement("li");
+            // ==================================================
+            // Main Prediction Result
+            // ==================================================
 
-                li.textContent =
-                    "No growing tips available.";
+            if (cropName) {
 
-                tipsList.appendChild(li);
+                cropName.textContent =
+                    displayValue(
+                        result.recommended_crop
+                    );
+
+            }
+
+
+            if (cropDescription) {
+
+                cropDescription.textContent =
+                    displayValue(
+                        result.details.description,
+                        "Crop information is available below."
+                    );
+
+            }
+
+
+            // ==================================================
+            // Prediction Confidence
+            // ==================================================
+
+            if (confidence) {
+
+                let confidenceValue =
+                    result.confidence;
+
+
+                if (
+                    confidenceValue !== null &&
+                    confidenceValue !== undefined
+                ) {
+
+                    confidenceValue =
+                        Number(confidenceValue);
+
+
+                    if (Number.isFinite(confidenceValue)) {
+
+                        confidence.textContent =
+                            confidenceValue.toFixed(2);
+
+                    } else {
+
+                        confidence.textContent =
+                            displayValue(
+                                result.confidence
+                            );
+
+                    }
+
+                } else {
+
+                    confidence.textContent = "--";
+
+                }
+
+            }
+
+
+            // ==================================================
+            // Crop Image
+            // ==================================================
+
+            if (cropImage) {
+
+                cropImage.src =
+                    displayValue(
+                        result.details.image,
+                        "/static/images/default.jpg"
+                    );
+
+
+                cropImage.alt =
+                    `${displayValue(
+                        result.recommended_crop,
+                        "Recommended Crop"
+                    )} Image`;
+
+            }
+
+
+            // ==================================================
+            // Crop Information
+            // ==========================================================
+
+            // Season
+            if (season) {
+
+                season.textContent =
+                    displayValue(
+                        result.details.season
+                    );
+
+            }
+
+
+            // Harvest Time
+            if (harvest) {
+
+                harvest.textContent =
+                    displayValue(
+                        result.details.harvest
+                    );
+
+            }
+
+
+            // Soil Type
+            if (soil) {
+
+                soil.textContent =
+                    displayValue(
+                        result.details.soil_type
+                    );
+
+            }
+
+
+            // Water Requirement
+            if (water) {
+
+                water.textContent =
+                    displayValue(
+                        result.details.water_requirement
+                    );
+
+            }
+
+
+            // Fertilizer
+            if (fertilizer) {
+
+                fertilizer.textContent =
+                    displayValue(
+                        result.details.fertilizer
+                    );
+
+            }
+
+
+            // Market Demand
+            if (market) {
+
+                market.textContent =
+                    displayValue(
+                        result.details.market_demand
+                    );
+
+            }
+
+
+            // ==================================================
+            // Suitable Regions
+            // ==================================================
+
+            if (regions) {
+
+                regions.textContent =
+                    displayArray(
+                        result.details.suitable_regions,
+                        ", "
+                    );
+
+            }
+
+
+            // ==================================================
+            // Common Uses
+            // ==================================================
+
+            if (uses) {
+
+                uses.textContent =
+                    displayArray(
+                        result.details.common_uses,
+                        " • "
+                    );
+
+            }
+
+
+            // ==================================================
+            // Growing Conditions
+            // ==================================================
+
+            if (temperatureRange) {
+
+                temperatureRange.textContent =
+                    displayValue(
+                        result.details.temperature
+                    );
+
+            }
+
+
+            if (humidityRange) {
+
+                humidityRange.textContent =
+                    displayValue(
+                        result.details.humidity
+                    );
+
+            }
+
+
+            if (phRange) {
+
+                phRange.textContent =
+                    displayValue(
+                        result.details.ph
+                    );
+
+            }
+
+
+            if (rainfallRange) {
+
+                rainfallRange.textContent =
+                    displayValue(
+                        result.details.rainfall
+                    );
+
+            }
+
+
+            // ==================================================
+            // Growing Tips
+            // ==================================================
+
+            if (tipsList) {
+
+                // Clear previous tips
+                tipsList.innerHTML = "";
+
+
+                const growingTips =
+                    result.details.growing_tips;
+
+
+                // ------------------------------------------------
+                // Case 1: Array
+                // ------------------------------------------------
+
+                if (Array.isArray(growingTips)) {
+
+                    growingTips.forEach((tip) => {
+
+                        if (
+                            tip !== null &&
+                            tip !== undefined &&
+                            String(tip).trim() !== ""
+                        ) {
+
+                            const li =
+                                document.createElement("li");
+
+                            li.textContent =
+                                tip;
+
+                            tipsList.appendChild(li);
+
+                        }
+
+                    });
+
+                }
+
+
+                // ------------------------------------------------
+                // Case 2: String
+                // ------------------------------------------------
+
+                else if (
+                    typeof growingTips === "string" &&
+                    growingTips.trim() !== ""
+                ) {
+
+                    const li =
+                        document.createElement("li");
+
+                    li.textContent =
+                        growingTips;
+
+                    tipsList.appendChild(li);
+
+                }
+
+
+                // ------------------------------------------------
+                // Case 3: No Tips
+                // ------------------------------------------------
+
+                else {
+
+                    const li =
+                        document.createElement("li");
+
+                    li.textContent =
+                        "No growing tips available.";
+
+                    tipsList.appendChild(li);
+
+                }
+
+            }
+
+
+            // ==================================================
+            // Success Message
+            // ==================================================
+
+            console.log(
+                "✅ Prediction successful:",
+                result.recommended_crop
+            );
+
+        }
+
+
+        // ======================================================
+        // Error Handling
+        // ======================================================
+
+        catch (error) {
+
+            console.error(
+                "❌ Prediction Error:",
+                error
+            );
+
+
+            alert(
+                "Prediction Failed!\n\n" +
+                error.message
+            );
+
+        }
+
+
+        // ======================================================
+        // Restore Prediction Button
+        // ======================================================
+
+        finally {
+
+            if (predictBtn) {
+
+                predictBtn.disabled = false;
+
+                predictBtn.innerHTML =
+                    '<i class="fa-solid fa-seedling"></i> Predict Best Crop';
 
             }
 
         }
 
-        catch(error){
-
-            console.error(error);
-
-            alert("Prediction Failed!\n\n" + error.message);
-
-        }
-
-        finally{
-
-            predictBtn.disabled = false;
-
-            predictBtn.innerHTML =
-
-                '<i class="fa-solid fa-seedling"></i> Predict Best Crop';
-
-        }
-
     });
-    // ================================================
+
+
+    // ==========================================================
     // Fade-in Animation
-    // ================================================
+    // ==========================================================
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
 
-        entries.forEach((entry) => {
+                entries.forEach((entry) => {
 
-            if (entry.isIntersecting) {
+                    if (
+                        entry.isIntersecting
+                    ) {
 
-                entry.target.classList.add("show");
+                        entry.target.classList.add(
+                            "show"
+                        );
 
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.15
             }
-
-        });
-
-    }, {
-
-        threshold: 0.15
-
-    });
+        );
 
 
     document.querySelectorAll(
-
-        ".detail-card, .condition-card, .workflow-card, .dataset-card, .tips-card, .result-card"
-
+        ".detail-card, " +
+        ".condition-card, " +
+        ".workflow-card, " +
+        ".dataset-card, " +
+        ".tips-card, " +
+        ".result-card"
     ).forEach((element) => {
 
         observer.observe(element);
@@ -363,50 +827,68 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // ================================================
+    // ==========================================================
     // Default Image Fallback
-    // ================================================
+    // ==========================================================
 
-    cropImage.addEventListener("error", () => {
+    if (cropImage) {
 
-        cropImage.src =
-            "/static/images/default.jpg";
+        cropImage.addEventListener(
+            "error",
+            () => {
 
-    });
+                if (
+                    !cropImage.src.includes(
+                        "default.jpg"
+                    )
+                ) {
 
+                    cropImage.src =
+                        "/static/images/default.jpg";
 
-    // ================================================
-    // Enter Key Support
-    // ================================================
-
-    document.querySelectorAll("input").forEach((input) => {
-
-        input.addEventListener("keypress", (e) => {
-
-            if (e.key === "Enter") {
-
-                e.preventDefault();
-
-                form.requestSubmit();
+                }
 
             }
+        );
 
-        });
+    }
+
+
+    // ==========================================================
+    // Enter Key Support
+    // ==========================================================
+
+    document.querySelectorAll(
+        "input"
+    ).forEach((input) => {
+
+        input.addEventListener(
+            "keypress",
+            (event) => {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    form.requestSubmit();
+
+                }
+
+            }
+        );
 
     });
 
 
-    // ================================================
-    // Console Message
-    // ================================================
+    // ==========================================================
+    // Final Console Message
+    // ==========================================================
 
     console.log(
-
         "%c🌱 SmartHarvest Ready!",
-
         "color:green;font-size:18px;font-weight:bold;"
-
     );
 
 });
-
