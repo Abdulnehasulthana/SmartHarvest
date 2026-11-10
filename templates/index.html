@@ -29,7 +29,152 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-</head>
+
+    <style>
+        .farmer-help-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            margin: 10px 0 18px;
+            padding: 11px 16px;
+            border: 1px solid #238b45;
+            border-radius: 10px;
+            background: #eef9f0;
+            color: #176b32;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .farmer-help-btn:hover { background: #ddf2e2; }
+        .error-message {
+            margin: 12px 0;
+            padding: 12px 14px;
+            border: 1px solid #ef9a9a;
+            border-radius: 8px;
+            background: #fff0f0;
+            color: #9b1c1c;
+            line-height: 1.5;
+        }
+        .error-message[hidden] { display: none; }
+        .help-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            padding: 20px;
+            overflow-y: auto;
+            background: rgba(0,0,0,.62);
+        }
+        .help-modal.open {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .help-modal-content {
+            position: relative;
+            width: min(760px, 100%);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            margin: auto;
+            padding: 26px;
+            border-radius: 16px;
+            background: #fff;
+            color: #26332a;
+            box-shadow: 0 15px 50px rgba(0,0,0,.25);
+        }
+        .help-modal-content h2 { margin: 0 40px 8px 0; color: #176b32; }
+        .help-modal-content h3 { margin: 18px 0 5px; color: #176b32; }
+        .help-modal-content p, .help-modal-content li { line-height: 1.6; }
+        .help-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 50%;
+            background: #edf3ee;
+            color: #26332a;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .help-note {
+            padding: 12px 14px;
+            border-left: 4px solid #d69e2e;
+            border-radius: 6px;
+            background: #fff8e7;
+        }
+        @media (max-width: 600px) {
+            .help-modal-content { padding: 20px 16px; }
+            .farmer-help-btn { width: 100%; }
+        }
+    
+        .alternatives-section {
+            margin-top: 28px;
+            padding: 26px;
+            border: 1px solid #e4eee6;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,0,0,.05);
+        }
+        .alternatives-heading { margin-bottom: 18px; }
+        .alternatives-heading h3 { margin: 0 0 7px; color: #176b32; }
+        .alternatives-heading p { margin: 0; color: #647067; line-height: 1.6; }
+        .alternatives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+        }
+        .alternative-card {
+            padding: 17px;
+            border: 1px solid #e3ebe5;
+            border-radius: 13px;
+            background: #fbfdfb;
+        }
+        .alternative-card.best { border: 2px solid #238b45; background: #f1faf3; }
+        .alternative-rank {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #176b32;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+        .alternative-card h4 { margin: 0 0 8px; color: #26332a; font-size: 1.08rem; }
+        .alternative-score-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: #526157;
+            font-size: .88rem;
+        }
+        .alternative-bar {
+            height: 8px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: #e6eee8;
+        }
+        .alternative-bar-fill {
+            height: 100%;
+            border-radius: inherit;
+            background: #238b45;
+        }
+        .alternative-note {
+            margin: 15px 0 0;
+            color: #68756b;
+            font-size: .82rem;
+            line-height: 1.55;
+        }
+        @media (max-width: 600px) {
+            .alternatives-section { padding: 18px; }
+            .alternatives-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+\n</head>
 
 <body>
 
@@ -165,6 +310,11 @@
 
             </p>
 
+            <button type="button" id="farmerHelpBtn" class="farmer-help-btn"
+                    aria-haspopup="dialog" aria-controls="farmerHelpModal">
+                <i class="fa-solid fa-circle-question"></i>
+                Farmer Help – How to Measure?
+            </button>
 
             <form id="predictionForm">
 
@@ -338,6 +488,10 @@
                 <!-- Predict Button -->
                 <!-- ========================= -->
 
+                <!-- Accessible area for API and validation errors -->
+                <div id="errorMessage" class="error-message"
+                     role="alert" aria-live="polite" hidden></div>
+
                 <button
                     type="submit"
                     class="predict-btn">
@@ -445,7 +599,7 @@
 
                         --
 
-                    </span> %
+                    </span> <span id="confidenceUnit">%</span>
 
                 </h3>
 
@@ -453,6 +607,18 @@
 
         </div>
 
+    </div>
+
+    <div class="alternatives-section" id="alternativesSection" hidden>
+        <div class="alternatives-heading">
+            <h3><i class="fa-solid fa-list-ol"></i> Top 5 Crop Recommendations</h3>
+            <p>These are the five highest-scoring crop classes from the model for the entered conditions.</p>
+        </div>
+        <div class="alternatives-grid" id="alternativesGrid"></div>
+        <p class="alternative-note">
+            Model scores are relative prediction scores, not guaranteed probabilities of crop success.
+            Confirm season, local water availability, soil-test results and local agricultural advice before planting.
+        </p>
     </div>
 
 </section>
@@ -1184,6 +1350,109 @@
 </footer>
 
 
+
+
+<!-- ========================================= -->
+<!-- FARMER MEASUREMENT HELP MODAL -->
+<!-- ========================================= -->
+<div id="farmerHelpModal" class="help-modal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="farmerHelpTitle" aria-hidden="true">
+    <div class="help-modal-content">
+        <button type="button" class="help-modal-close"
+                id="closeFarmerHelp" aria-label="Close help">&times;</button>
+
+        <h2 id="farmerHelpTitle">
+            <i class="fa-solid fa-book-open"></i>
+            Farmer Measurement Guide
+        </h2>
+        <p>Use measured values from your farm or a trusted local source.
+           Do not guess values just to obtain a recommendation.</p>
+
+        <h3>1. Nitrogen (N), Phosphorus (P) and Potassium (K)</h3>
+        <p>These are soil nutrient measurements. Collect a representative
+           soil sample and submit it to a soil-testing laboratory, KVK,
+           or an authorised soil testing centre. Enter the N, P and K
+           values exactly as reported, using the same units expected by
+           this model.</p>
+
+        <h3>2. Temperature (°C)</h3>
+        <p>Use a thermometer or a nearby reliable weather station.
+           Enter the temperature in degrees Celsius. Use a value
+           representative of the crop's growing conditions.</p>
+
+        <h3>3. Humidity (%)</h3>
+        <p>Use a digital hygrometer or a reliable weather station.
+           Enter relative humidity as a percentage from 0 to 100.</p>
+
+        <h3>4. Soil pH</h3>
+        <p>Use a calibrated soil pH meter according to its instructions,
+           or obtain the value from a soil-testing laboratory.
+           Soil pH indicates acidity or alkalinity.</p>
+
+        <h3>5. Rainfall (mm)</h3>
+        <p>Use a rain gauge or a reliable local weather station.
+           Enter rainfall in millimetres for the same measurement period
+           used by the model's training data.</p>
+
+        <div class="help-note">
+            <strong>Important:</strong> The model expects the same units,
+            sampling method and measurement period used in its training
+            dataset. A soil report may use different nutrient units or
+            extraction methods. Ask the laboratory or an agricultural
+            officer to interpret the report before entering values.
+        </div>
+
+        <h3>Where can I get help?</h3>
+        <ul>
+            <li>Visit your nearest Krishi Vigyan Kendra (KVK).</li>
+            <li>Contact an authorised soil-testing laboratory.</li>
+            <li>Ask your local agriculture department about soil testing
+                and Soil Health Card services.</li>
+        </ul>
+        <p><strong>తెలుగు సూచన:</strong> N, P, K విలువల కోసం మట్టి పరీక్ష
+           చేయించండి. pH కోసం soil pH meter లేదా ల్యాబ్ రిపోర్ట్ ఉపయోగించండి.
+           ఉష్ణోగ్రత, తేమ, వర్షపాతం కోసం నమ్మకమైన వాతావరణ కొలతలను ఉపయోగించండి.
+           విలువలు తెలియకపోతే ఊహించి నమోదు చేయవద్దు.</p>
+    </div>
+</div>
+
+<script>
+(function () {
+    const modal = document.getElementById("farmerHelpModal");
+    const openButton = document.getElementById("farmerHelpBtn");
+    const closeButton = document.getElementById("closeFarmerHelp");
+
+    if (!modal || !openButton || !closeButton) return;
+
+    function openHelp() {
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        closeButton.focus();
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeHelp() {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        openButton.focus();
+    }
+
+    openButton.addEventListener("click", openHelp);
+    closeButton.addEventListener("click", closeHelp);
+
+    modal.addEventListener("click", function (event) {
+        if (event.target === modal) closeHelp();
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && modal.classList.contains("open")) {
+            closeHelp();
+        }
+    });
+})();
+</script>
 
 <!-- ========================================= -->
 <!-- SCROLL TO TOP -->
